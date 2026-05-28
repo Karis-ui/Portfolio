@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charles Macharia - CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e0e0e0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cv-container {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a3a6b, #2c5a8c);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .contact-info span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 25px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0;
+        }
+
+        .left-column {
+            background: #f5f7fa;
+            padding: 35px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a3a6b;
+            border-left: 4px solid #1a3a6b;
+            padding-left: 12px;
+            margin-bottom: 15px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e4e8;
+            font-size: 0.9rem;
+        }
+
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+
+        .skill-category {
+            font-weight: 700;
+            color: #2c5a8c;
+            margin-top: 10px;
+        }
+
+        .edu-item {
+            margin-bottom: 15px;
+        }
+
+        .edu-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a3a6b;
+        }
+
+        .edu-item p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .languages span {
+            display: inline-block;
+            background: white;
+            border: 1px solid #1a3a6b;
+            color: #1a3a6b;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 5px 5px 0 0;
+        }
+
+        .right-column {
+            padding: 35px;
+        }
+
+        .profile-text {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .project-item {
+            margin-bottom: 20px;
+        }
+
+        .project-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a3a6b;
+            margin-bottom: 5px;
+        }
+
+        .project-item p {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .cert-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cert-item i {
+            width: 30px;
+            color: #1a3a6b;
+            font-size: 1.2rem;
+        }
+
+        .cert-item span {
+            font-size: 0.9rem;
+        }
+
+        hr {
+            margin: 15px 0;
+            border: none;
+            border-top: 1px solid #e0e4e8;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .cv-container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            .left-column {
+                background: #f5f7fa;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        .btn-pdf {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1a3a6b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .btn-pdf:hover {
+            background: #2c5a8c;
+            transform: scale(1.02);
+        }
+
+        @media print {
+            .btn-pdf {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cv-container" id="cv-content">
+        <div class="header">
+            <h1>CHARLES MACHARIA</h1>
+            <h3>Full Stack Developer | Cybersecurity Expert | Automation Engineer</h3>
+            <div class="contact-info">
+                <span> +254 727 537 684</span>
+                <span> kariukic547@gmail.com</span>
+                <span> Nairobi, Kenya</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-column">
+                <div class="section">
+                    <div class="section-title">TECHNICAL SKILLS</div>
+                    <ul class="skill-list">
+                        <li><strong>Languages:</strong> Python, JavaScript, SQL, TypeScript,</li>
+                        <li><strong>Frontend:</strong> React.js, Tailwind CSS, HTML/CSS</li>
+                        <li><strong>Backend:</strong> Django, Node.js, Flask</li>
+                        <li><strong>Databases:</strong> MySQL, PostgreSQL, MongoDB</li>
+                        <li><strong>Security Tools:</strong> Nmap, Wireshark, Metasploit, Burp Suite,XSStrike</li>
+                        <li><strong>OS:</strong> Kali Linux, Windows, Ubuntu</li>
+                        <li><strong>Version Control:</strong> Git, GitHub</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">EDUCATION</div>
+                    <div class="edu-item">
+                        <h4>BSc. Software Engineering</h4>
+                        <p>Zetech University | 2024 - Present (Awaiting Graduation)</p>
+                        <p style="font-size: 0.8rem; color: #666;">Relevant: Cybersecurity, Web Development, Database
+                            Design, Machine Learning, Network Security</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">CERTIFICATIONS</div>
+                    <div class="cert-item">
+                        <i></i>
+                        <span>Cisco Networking Essentials</span>
+                    </div>
+                    <div class="cert-item">
+                        <i></i>
+                        <span>OSCP</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">LANGUAGES</div>
+                    <div class="languages">
+                        <span>English (Fluent)</span>
+                        <span>Swahili (Native)</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">INTERESTS</div>
+                    <ul class="skill-list">
+                        <li> CTF Competitions</li>
+                        <li> Machine Learning</li>
+                        <li> Open Source Contribution</li>
+                        <li> Mobile Development</li>
+                        <li> Web Development</li>
+                        <li> Cybersecurity Research</li>
+                        <li> Penetration Testing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="section">
+                    <div class="section-title">PROFILE SUMMARY</div>
+                    <div class="profile-text">
+                        Enthusiastic Software Engineering graduate(in-process) with a strong foundation in full-stack
+                        development,
+                        cybersecurity, and machine learning. Passionate about building secure, scalable applications
+                        and solving complex problems through code. Quick learner with hands-on experience in
+                        penetration testing tools and modern web technologies.
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">PROJECTS</div>
+
+                    <div class="project-item">
+                        <h4> Medicare Health System</h4>
+                        <p>A full-stack healthcare management platform enabling patient record keeping, appointment
+                            scheduling,
+                            and prescription tracking. Built with React, Django REST Framework, and PostgreSQL.</p>
+                    </div>
+
+                    <div class="project-item">
+                        <h4> E-Commerce Platform</h4>
+                        <p>Complete e-commerce solution with product catalog, shopping cart, payment integration, and
+                            admin dashboard.
+                            Technologies: React, Tailwind CSS, Node.js, MongoDB.</p>
+                    </div>
+
+                    <div class="project-item">
+                        <h4> K-Trace Application(Project-wise)</h4>
+                        <p>Developed a web app based on farm regulations foucused on automating compliance checks and
+                            track of payments right from input of coffee in the factories untill revenue generation.
+                            Focus on real-time data tracking and compliance reporting as well as implementation of data
+                            visualization techniques and consistency.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">CYBERSECURITY & LAB WORK</div>
+                    <div class="project-item">
+                        <h4> Penetration Testing Lab</h4>
+                        <p>Hands-on experience with Kali Linux tools (Nmap, Metasploit, Burp Suite, MySqlmap) in
+                            authorized lab environments.
+                            Conducted vulnerability assessments and documented findings.</p>
+                    </div>
+                    <div class="project-item">
+                        <h4> Network Monitoring</h4>
+                        <p>Configured and managed network monitoring using Wireshark for packet analysis and traffic
+                            inspection
+                            in controlled network environments.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">TOOLS & PLATFORMS</div>
+                    <div class="languages">
+                        <span>Git/GitHub</span>
+                        <span>Docker</span>
+                        <span>Postman</span>
+                        <span>VS Code</span>
+                        <span>Kali Linux</span>
+                        <span>Burp Suite</span>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div style="font-size: 0.8rem; color: #888; text-align: center; margin-top: 15px;">
+                    <i>Available upon reference requests</i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-pdf" onclick="downloadPDF()">
+        Download as PDF
+    </button>
+
+    <script>
+        function downloadPDF() {
+            window.print();
+        }
+
+        window.onbeforeprint = function () {
+            document.querySelector('.btn-pdf').style.display = 'none';
+        };
+
+        window.onafterprint = function () {
+            document.querySelector('.btn-pdf').style.display = 'flex';
+        };
+    </script>
+</body>
+
+</html>
