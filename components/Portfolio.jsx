@@ -848,7 +848,7 @@ export default function Portfolio({ page = "home" }) {
           <SectionHeading
             eyebrow="Cybersecurity · Full-stack · Automation"
             title={<>Secure by design.<br /><span>Automated by default.</span></>}
-            description="I’m Charles Macharia, a Software Engineering student in Nairobi. I build full-stack systems, test them in authorized environments, and automate repetitive work."
+            description="I’m Charles Macharia, a Software Engineering student based in Nairobi. I build full-stack applications, assess systems in authorized environments, and automate repetitive workflows."
           />
           <SectionVisual section="overview" />
           <div className="portfolio-stats">
