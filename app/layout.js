@@ -1,4 +1,5 @@
 import { Outfit, JetBrains_Mono } from "next/font/google";
+import BootSequence from "@/components/BootSequence";
 import "./globals.css";
 
 const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit' });
@@ -13,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`scroll-smooth ${outfit.variable} ${jetbrains.variable}`}>
       <body className={`${outfit.className} relative bg-deep text-secondary`}>
-        {children}
+        <BootSequence>{children}</BootSequence>
       </body>
     </html>
   );

@@ -28,3 +28,6 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000).
 
 Run the production build with `npm run build`.
+
+Section photos are stored locally in `public/images` and credited on each page.
+They are sourced from [Unsplash](https://unsplash.com/license).

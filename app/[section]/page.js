@@ -6,6 +6,7 @@ const sections = {
   lab: "Live Lab",
   automation: "Automation",
   engineering: "Engineering",
+  projects: "Projects",
   certifications: "Credentials",
   trends: "Trends",
   hackathons: "Hackathons",

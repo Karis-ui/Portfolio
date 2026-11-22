@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   ArrowDown,
@@ -110,6 +111,18 @@ const securityChecks = [
     question: "Would anyone notice repeated failed requests?",
     test: "Generate test events and verify that they appear in protected logs.",
     fix: "Log security events and alert on meaningful patterns.",
+  },
+  {
+    title: "Cryptography",
+    question: "Are passwords and sensitive data protected by correct cryptographic practices?",
+    test: "Review password storage, token handling and whether sensitive values are exposed.",
+    fix: "Use modern password hashing and current, well-maintained cryptographic libraries.",
+  },
+  {
+    title: "Supply-chain security",
+    question: "Do dependencies and deployment components introduce avoidable risk?",
+    test: "Review pinned versions, package provenance and the deployment configuration.",
+    fix: "Audit dependencies, pin reviewed versions and keep deployment components patched.",
   },
 ];
 
@@ -234,7 +247,7 @@ const projects = [
     problem: "Security testing should be hands-on without putting real systems at risk.",
     built: "An authorized lab workflow for assessment, evidence collection and reporting.",
     security: "Testing stays within owned or explicitly authorized environments.",
-    tools: ["Kali Linux", "Nmap", "Burp Suite", "Wireshark"],
+    tools: ["Kali Linux", "Nmap", "Metasploit", "Burp Suite", "sqlmap"],
   },
   {
     title: "Network Monitoring",
@@ -242,6 +255,13 @@ const projects = [
     built: "A controlled network environment for packet analysis and traffic inspection.",
     security: "Establish a baseline, then investigate unexpected changes.",
     tools: ["Wireshark", "Packet analysis", "Traffic inspection"],
+  },
+  {
+    title: "Search Hybrid System",
+    problem: "Users need a seamless way to search across multiple data sources and formats.",
+    built: "A unified search interface that aggregates results from various backend systems.",
+    security: "Ensure that search queries and results are handled with appropriate access controls.",
+    tools: ["Elasticsearch", "React.ts", "Flask - Python", "API integration"],
   },
 ];
 
@@ -290,9 +310,9 @@ const trends = [
   },
   {
     type: "Automation",
-    title: "Automation with guardrails",
+    title: "Agentic automation with guardrails",
     description:
-      "Automated workflows need limited permissions, useful logs and human review for risky steps.",
+      "AI agents are starting to run workflows end to end. They need limited permissions, useful logs and human approval for risky steps.",
   },
   {
     type: "Security",
@@ -363,6 +383,139 @@ function Chips({ items }) {
   );
 }
 
+const sectionVisuals = {
+  overview: {
+    image: "/images/portfolio-overview.jpg",
+    alt: "Technology professionals working together around laptops.",
+    label: "OVERVIEW · COLLABORATION",
+    caption: "Building secure systems takes a team.",
+  },
+  security: {
+    image: "/images/portfolio-security.jpg",
+    alt: "A laptop displaying green code in a dark workspace.",
+    label: "SECURITY · AUTHORIZED TESTING",
+    caption: "Test deliberately. Document clearly.",
+  },
+  lab: {
+    image: "/images/portfolio-lab.jpg",
+    alt: "Close-up view of a detailed electronic circuit board.",
+    label: "LIVE LAB · SYSTEMS",
+    caption: "Understand the technology behind the interface.",
+  },
+  automation: {
+    image: "/images/portfolio-automation.jpg",
+    alt: "A developer working on code at a laptop.",
+    label: "AUTOMATION · WORKFLOWS",
+    caption: "Turn repeatable work into reliable systems.",
+  },
+  engineering: {
+    image: "/images/portfolio-engineering.jpg",
+    alt: "Two software developers collaborating at a computer.",
+    label: "ENGINEERING · CODE REVIEW",
+    caption: "Good software gets better when we build together.",
+  },
+  projects: {
+    image: "/images/portfolio-projects.jpg",
+    alt: "Colleagues discussing a project around a computer.",
+    label: "PROJECTS · PROTOTYPING",
+    caption: "From a practical problem to a working build.",
+  },
+  certifications: {
+    image: "/images/portfolio-certifications.jpg",
+    alt: "Students studying and collaborating in a library.",
+    label: "CREDENTIALS · CONTINUOUS LEARNING",
+    caption: "Strong foundations come from practice and study.",
+  },
+  trends: {
+    image: "/images/portfolio-trends.jpg",
+    alt: "An analytics dashboard showing charts on a laptop.",
+    label: "TRENDS · SIGNALS IN THE DATA",
+    caption: "Turning new signals into useful insight.",
+  },
+  hackathons: {
+    image: "/images/portfolio-hackathons.jpg",
+    alt: "A student team collaborating around laptops on a prototype.",
+    label: "HACKATHONS · TEAM BUILD",
+    caption: "Students teaming up to build and demo a prototype.",
+  },
+  about: {
+    image: "/images/portfolio-about.jpg",
+    alt: "A small team working together at a shared table.",
+    label: "ABOUT · HANDS-ON LEARNING",
+    caption: "Curiosity grows through making things together.",
+  },
+  contact: {
+    image: "/images/portfolio-contact.jpg",
+    alt: "Colleagues sharing ideas while working around a laptop.",
+    label: "CONTACT · COLLABORATION",
+    caption: "Let’s talk about what we could build next.",
+  },
+};
+
+function SectionVisual({ section }) {
+  const visual = sectionVisuals[section];
+
+  return (
+    <figure className={`section-visual section-visual-${section}`}>
+      <Image
+        className="section-visual-image"
+        src={visual.image}
+        alt={visual.alt}
+        fill
+        sizes="(max-width: 720px) calc(100vw - 40px), (max-width: 1100px) 90vw, 1080px"
+      />
+      <div className="section-visual-shade" aria-hidden="true" />
+      <figcaption className="section-visual-caption">
+        <span className="section-visual-label">{visual.label}</span>
+        <strong>{visual.caption}</strong>
+        <small>Photo · Unsplash</small>
+      </figcaption>
+    </figure>
+  );
+}
+
+const nextSections = [
+  { id: "home", label: "Overview", href: "/" },
+  { id: "security", label: "Security", href: "/security" },
+  { id: "lab", label: "Live Lab", href: "/lab" },
+  { id: "automation", label: "Automation", href: "/automation" },
+  { id: "engineering", label: "Engineering", href: "/engineering" },
+  { id: "projects", label: "Projects", href: "/projects" },
+  { id: "certifications", label: "Credentials", href: "/certifications" },
+  { id: "trends", label: "Trends", href: "/trends" },
+  { id: "hackathons", label: "Hackathons", href: "/hackathons" },
+  { id: "about", label: "About", href: "/about" },
+  { id: "contact", label: "Contact", href: "/contact" },
+];
+
+const heroTypeLines = [
+  "Blue teaming...",
+  "Building secure systems...",
+  "Deploying secure infrastructure...",
+  "Automating security infrastructure...",
+];
+
+function NextSection({ page }) {
+  const currentIndex = nextSections.findIndex((item) => item.id === page);
+  if (page === "contact") {
+    return (
+      <Link className="overview-next" href="/">
+        <p className="portfolio-eyebrow">Back to</p>
+        <span>Overview <ArrowRight size={32} strokeWidth={1.5} /></span>
+      </Link>
+    );
+  }
+  const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % nextSections.length : 0;
+  const next = nextSections[nextIndex];
+
+  return (
+    <Link className="overview-next" href={next.href}>
+      <p className="portfolio-eyebrow">Next</p>
+      <span>{next.label} <ArrowRight size={32} strokeWidth={1.5} /></span>
+    </Link>
+  );
+}
+
 export default function Portfolio({ page = "home" }) {
   const activeSection = page;
   const router = useRouter();
@@ -394,6 +547,15 @@ export default function Portfolio({ page = "home" }) {
   const [reportStatus, setReportStatus] = useState("");
   const [contactName, setContactName] = useState("");
   const [contactMessage, setContactMessage] = useState("");
+  const [heroTypeIndex, setHeroTypeIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setHeroTypeIndex((index) => (index + 1) % heroTypeLines.length);
+    }, 2600);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   const filteredTrends = useMemo(
     () => trends.filter((item) => trendFilter === "All" || item.type === trendFilter),
@@ -649,7 +811,7 @@ export default function Portfolio({ page = "home" }) {
             <div className="hero-copy">
               <p className="hero-kicker"><span />Software Developer · Cybersecurity · Automation Engineer</p>
               <h1>Macharia<br />Charles<br />Kariuki</h1>
-              <p className="hero-type"><Terminal size={18} /><span>Automating security pipelines...</span><i /></p>
+              <p className="hero-type" aria-live="polite"><Terminal size={18} /><span key={heroTypeIndex}>{heroTypeLines[heroTypeIndex]}</span><i /></p>
               <p className="hero-description">
                 Specializing in building robust, high-performance applications while
                 architecting secure infrastructure. Bridging the gap between software
@@ -688,11 +850,12 @@ export default function Portfolio({ page = "home" }) {
             title={<>Secure by design.<br /><span>Automated by default.</span></>}
             description="I’m Charles Macharia, a Software Engineering student in Nairobi. I build full-stack systems, test them in authorized environments, and automate repetitive work."
           />
+          <SectionVisual section="overview" />
           <div className="portfolio-stats">
-            <div><strong>4</strong><span>Core disciplines</span></div>
-            <div><strong>5</strong><span>Project case studies</span></div>
+            <div><strong>4</strong><span>Languages</span></div>
+            <div><strong>6</strong><span>Security tools</span></div>
+            <div><strong>5</strong><span>Projects</span></div>
             <div><strong>2</strong><span>Certifications</span></div>
-            <div><strong>1</strong><span>Security-first approach</span></div>
           </div>
           <div className="portfolio-terminal">
             <div className="terminal-title"><span className="terminal-dots"><i /><i /><i /></span><span>charles@kali: ~/portfolio</span></div>
@@ -722,6 +885,42 @@ export default function Portfolio({ page = "home" }) {
               ))}
             </div>
           </div>
+          <div className="portfolio-subheading overview-start-heading">
+            <h2>Start here</h2>
+          </div>
+          <div className="overview-start-grid">
+            <Link className="overview-start-card is-featured" href="/security">
+              <p className="portfolio-eyebrow">For security teams</p>
+              <h3>Eight checks for a healthcare app</h3>
+              <p>The questions, tests and fixes I run first.</p>
+            </Link>
+            <Link className="overview-start-card" href="/lab">
+              <p className="portfolio-eyebrow">Hands-on</p>
+              <h3>The Live Lab</h3>
+              <p>Hack a simulated clinic, fix it and watch the risk fall.</p>
+            </Link>
+            <Link className="overview-start-card" href="/automation">
+              <p className="portfolio-eyebrow">For operations</p>
+              <h3>The K-Trace pipeline</h3>
+              <p>Compliance and payments, automated end to end.</p>
+            </Link>
+            <Link className="overview-start-card" href="/projects">
+              <p className="portfolio-eyebrow">For hiring managers</p>
+              <h3>Five case studies</h3>
+              <p>Problem, build and security lens for each.</p>
+            </Link>
+            <Link className="overview-start-card" href="/certifications">
+              <p className="portfolio-eyebrow">Credentials</p>
+              <h3>OSCP and Cisco</h3>
+              <p>What each one proves and how I use it.</p>
+            </Link>
+            <Link className="overview-start-card" href="/trends">
+              <p className="portfolio-eyebrow">Forward-looking</p>
+              <h3>Nine industry shifts</h3>
+              <p>Where the field is heading, and where I fit.</p>
+            </Link>
+          </div>
+          <NextSection page="home" />
         </section>
           </>
         )}
@@ -732,6 +931,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Offensive thinking,<br /><span>defensive results.</span></>}
             description="Hands-on testing in authorized lab environments, from first scan to documented findings. Select a phase to see how I approach it."
           />
+          <SectionVisual section="security" />
           <div className="portfolio-tabs" role="tablist" aria-label="Security assessment phases">
             {securityPhases.map((item, index) => (
               <button key={item.name} type="button" role="tab" aria-selected={phase === index} onClick={() => setPhase(index)}>
@@ -762,7 +962,8 @@ export default function Portfolio({ page = "home" }) {
             <h3>Findings matter when someone can act on them.</h3>
             <p>Each issue should include steps to reproduce, plain-language impact and a recommended fix—so developers can verify and resolve it.</p>
           </div>
-          <Chips items={["Kali Linux", "Nmap", "Wireshark", "Metasploit", "Burp Suite", "Postman", "Documentation"]} />
+          <Chips items={["Kali Linux", "Nmap", "Wireshark", "Metasploit", "Burp Suite", "XSStrike", "sqlmap", "Postman"]} />
+          <NextSection page="security" />
         </section>}
 
         {page === "lab" && <section className="portfolio-section" id="lab">
@@ -771,6 +972,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Break it. <span>Fix it.</span><br />Watch the risk fall.</>}
             description="A safe, simulated clinic app with four vulnerabilities. It uses fake data in your browser and never contacts an external system."
           />
+          <SectionVisual section="lab" />
           <div className="lab-mission portfolio-card">
             <FlaskConical size={22} />
             <div><b>Mission</b><p>Try the sample patient, search and note flows. Then enable the fixes and replay the same tests.</p></div>
@@ -844,6 +1046,7 @@ export default function Portfolio({ page = "home" }) {
             <h3>Practice safely. Test only with permission.</h3>
             <p>This browser-only exercise uses mock records and harmless strings to demonstrate the questions, fixes and reporting process without targeting real systems.</p>
           </div>
+          <NextSection page="lab" />
         </section>}
 
         {page === "automation" && <section className="portfolio-section" id="automation">
@@ -852,6 +1055,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Remove the human <span>error,</span><br />keep the human.</>}
             description="K-Trace automates coffee-farm compliance checks and tracks payments from factory intake to revenue. Explore each stage."
           />
+          <SectionVisual section="automation" />
           <div className="pipeline-tabs" role="tablist" aria-label="K-Trace workflow">
             {pipeline.map((stage, index) => (
               <button key={stage.name} type="button" role="tab" aria-selected={pipelineStage === index} onClick={() => setPipelineStage(index)}>
@@ -888,6 +1092,7 @@ export default function Portfolio({ page = "home" }) {
               <article className="portfolio-card" key={title}><span className="card-index">0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>
             ))}
           </div>
+          <NextSection page="automation" />
         </section>}
 
         {page === "engineering" && <section className="portfolio-section" id="engineering">
@@ -896,6 +1101,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Full-stack, with security<br />in the <span>foundation.</span></>}
             description="React and Tailwind on the front, Django, Node and Flask behind it, over PostgreSQL, MySQL or MongoDB."
           />
+          <SectionVisual section="engineering" />
           <div className="portfolio-tabs" role="tablist" aria-label="Technology stack">
             {technologyStacks.map((item, index) => <button key={item.name} type="button" role="tab" aria-selected={stack === index} onClick={() => setStack(index)}><span>{String(index + 1).padStart(2, "0")}</span>{item.name}</button>)}
           </div>
@@ -917,14 +1123,16 @@ export default function Portfolio({ page = "home" }) {
             ].map(([title, description], index) => <article className="portfolio-card" key={title}><span className="card-index">0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}
           </div>
           <div className="portfolio-callout"><p className="portfolio-eyebrow">Why security-minded development?</p><h3>Catch issues while building, not weeks later.</h3><p>Thinking about permissions, unsafe inputs and error states as I implement a feature helps reduce rework and makes security part of the design.</p></div>
+          <NextSection page="engineering" />
         </section>}
 
         {page === "projects" && <section className="portfolio-section" id="projects">
           <SectionHeading
             eyebrow="05 · Selected work"
-            title={<>Five projects, five real <span>problems.</span></>}
+            title={<>Six projects, six real <span>problems.</span></>}
             description="Each case starts with a problem, then the build, then the security questions the work needs to answer."
           />
+          <SectionVisual section="projects" />
           <div className="portfolio-projects">
             {projects.map((project, index) => (
               <article className="portfolio-project portfolio-card" key={project.title}>
@@ -943,6 +1151,7 @@ export default function Portfolio({ page = "home" }) {
             <p>The Live Lab lets you explore mock vulnerabilities, apply mitigations and generate a sample report.</p>
             <Link className="portfolio-inline-link" href="/lab">Open the Live Lab <ArrowRight size={15} /></Link>
           </div>
+          <NextSection page="projects" />
         </section>}
 
         {page === "certifications" && <section className="portfolio-section" id="certifications">
@@ -951,6 +1160,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Credentials that <span>prove</span><br />hands-on skill.</>}
             description="Two certifications chosen because they build practical foundations in security and networking."
           />
+          <SectionVisual section="certifications" />
           <div className="portfolio-card-grid two-column">
             <article className="portfolio-card credential-card">
               <Shield size={28} />
@@ -967,6 +1177,10 @@ export default function Portfolio({ page = "home" }) {
               <p><b>What it shows:</b> Network fundamentals for interpreting packet captures and service scans.</p>
             </article>
           </div>
+          <div className="portfolio-subheading"><h3>What the OSCP syllabus covers</h3></div>
+          <Chips items={["Enumeration", "Web application attacks", "Password attacks", "Privilege escalation", "Pivoting and tunneling", "Active Directory attacks", "Report writing"]} />
+          <div className="portfolio-subheading"><h3>What the Cisco foundation covers</h3></div>
+          <Chips items={["IP addressing", "Subnetting", "Routing", "Switching", "Network devices", "Troubleshooting"]} />
           <div className="portfolio-subheading"><h3>From credentials to capability</h3></div>
           <div className="portfolio-card-grid">
             {[
@@ -974,9 +1188,12 @@ export default function Portfolio({ page = "home" }) {
               ["Cisco → Analysis", "Read packets and service scans with a foundation in networking."],
               ["Both → Engineering", "Understand how systems fail to build systems that fail less."],
               ["Both → Automation", "Build safer scripts with practical testing and network knowledge."],
+              ["OSCP → Reporting", "Every exercise ends in a written report that fixes carry into projects."],
+              ["Cisco → Trends", "Strong fundamentals make zero trust, cloud and API security easier to learn."],
             ].map(([title, description]) => <article className="portfolio-card" key={title}><Award size={20} /><h3>{title}</h3><p>{description}</p></article>)}
           </div>
           <div className="portfolio-callout"><p className="portfolio-eyebrow">Learning in progress</p><h3>Still learning on purpose.</h3><p>Machine learning, mobile development and open-source contribution are current study interests. Credential verification is available on request.</p></div>
+          <NextSection page="certifications" />
         </section>}
 
         {page === "trends" && <section className="portfolio-section" id="trends">
@@ -985,6 +1202,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Where the field is <span>heading,</span><br />and how I am ready.</>}
             description="Shifts in security, automation and engineering, connected to the work I care about."
           />
+          <SectionVisual section="trends" />
           <div className="portfolio-filter" role="group" aria-label="Filter trends">
             {["All", "Security", "Automation", "Engineering"].map((filter) => (
               <button key={filter} type="button" aria-pressed={trendFilter === filter} onClick={() => setTrendFilter(filter)}>{filter}</button>
@@ -993,6 +1211,7 @@ export default function Portfolio({ page = "home" }) {
           <div className="portfolio-card-grid">
             {filteredTrends.map((item) => <article className="portfolio-card" key={item.title}><p className="portfolio-eyebrow">{item.type}</p><h3>{item.title}</h3><p>{item.description}</p></article>)}
           </div>
+          <NextSection page="trends" />
         </section>}
 
         {page === "hackathons" && <section className="portfolio-section" id="hackathons">
@@ -1001,6 +1220,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Built and broken<br /><span>under pressure.</span></>}
             description="Capture-the-flag events sharpen security skills; hackathons bring full-stack, security and automation together under a deadline."
           />
+          <SectionVisual section="hackathons" />
           <div className="portfolio-card-grid">
             {[
               ["The backend", "Build an API and database model that hold up past the demo."],
@@ -1011,11 +1231,23 @@ export default function Portfolio({ page = "home" }) {
               ["The glue", "Use Git and a repeatable setup so the team can ship on time."],
             ].map(([title, description], index) => <article className="portfolio-card" key={title}><span className="card-index">0{index + 1}</span><h3>{title}</h3><p>{description}</p></article>)}
           </div>
+          <div className="portfolio-subheading"><h3>What CTF categories train</h3></div>
+          <div className="portfolio-card-grid">
+            {[
+              ["Web", "Injection, broken authentication and application logic flaws."],
+              ["Network", "Packet captures, protocols and service analysis."],
+              ["Cryptography", "Spotting weak schemes and misused primitives."],
+              ["Forensics", "Reconstructing what happened from files and logs."],
+              ["Reverse engineering", "Reading unfamiliar code to understand behavior."],
+              ["OSINT", "Finding what is already public, and why it matters."],
+            ].map(([title, description]) => <article className="portfolio-card" key={title}><p className="portfolio-eyebrow">Category</p><h3>{title}</h3><p>{description}</p></article>)}
+          </div>
           <div className="portfolio-subheading"><h3>A 48-hour sprint playbook</h3></div>
           <div className="portfolio-timeline">
             {sprint.map(([time, title, description]) => <div className="timeline-item" key={time}><b>{time} · {title}</b><p>{description}</p></div>)}
           </div>
           <div className="portfolio-callout"><p className="portfolio-eyebrow">CTF competitions</p><h3>Practice, learn, document.</h3><p>Web, network and problem-solving challenges are a standing part of my learning. Scoreboards and write-ups will be linked here as I publish them.</p></div>
+          <NextSection page="hackathons" />
         </section>}
 
         {page === "about" && <section className="portfolio-section" id="about">
@@ -1024,6 +1256,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Builder first,<br /><span>breaker second.</span></>}
             description="A Software Engineering student with a foundation in full-stack development, cybersecurity and machine learning. I like building secure, scalable applications and learning by solving real problems."
           />
+          <SectionVisual section="about" />
           <div className="about-education portfolio-card">
             <GraduationCap size={24} />
             <div><p className="portfolio-eyebrow">2024 – present · Zetech University</p><h3>BSc. Software Engineering</h3><p>Coursework includes cybersecurity, web development, database design, machine learning and network security.</p></div>
@@ -1040,7 +1273,8 @@ export default function Portfolio({ page = "home" }) {
             ].map(([title, description]) => <article className="portfolio-card" key={title}><BookOpen size={19} /><h3>{title}</h3><p>{description}</p></article>)}
           </div>
           <div className="portfolio-subheading"><h3>Interests and languages</h3></div>
-          <Chips items={["CTF competitions", "Machine learning", "Open source", "Mobile development", "Web development", "Cybersecurity research", "English · Fluent", "Swahili · Native"]} />
+          <Chips items={["CTF competitions", "Machine learning", "Open source", "Mobile development", "Web development", "Cybersecurity research", "Penetration testing", "English · Fluent", "Swahili · Native"]} />
+          <NextSection page="about" />
         </section>}
 
         {page === "contact" && <section className="portfolio-section contact-section" id="contact">
@@ -1049,6 +1283,7 @@ export default function Portfolio({ page = "home" }) {
             title={<>Let’s secure, build or<br /><span>automate something.</span></>}
             description="Open to internships, junior roles and collaborations. References are available on request."
           />
+          <SectionVisual section="contact" />
           <div className="contact-grid">
             <div className="contact-details">
               <div className="contact-orb" aria-hidden="true"><div><Shield size={42} /></div></div>
@@ -1069,6 +1304,16 @@ export default function Portfolio({ page = "home" }) {
               <small>This opens your email app with the message filled in; it does not send anything automatically.</small>
             </form>
           </div>
+          <div className="portfolio-subheading"><h3>Good fit if you need</h3></div>
+          <Chips items={[
+            "A developer who tests his own code",
+            "Penetration-testing support in a lab",
+            "Workflow or compliance automation",
+            "Security review of a web app or API",
+            "Full-stack feature delivery",
+            "A fast learner for a junior role",
+          ]} />
+          <NextSection page="contact" />
           <footer className="portfolio-footer">
             <Link href="/"><span className="brand-mark">◆</span> charles@sec</Link>
             <span>Designed and built with React · {new Date().getFullYear()}</span>
